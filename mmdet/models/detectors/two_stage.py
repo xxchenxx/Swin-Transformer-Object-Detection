@@ -80,6 +80,7 @@ class TwoStageDetector(BaseDetector):
     def extract_feat(self, img):
         """Directly extract features from the backbone+neck."""
         x = self.backbone(img)
+
         if self.with_neck:
             x = self.neck(x)
         return x
