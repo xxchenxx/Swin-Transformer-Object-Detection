@@ -7,6 +7,8 @@
 import sys, os
 sys.path.append('/home/xc4863/RepLKNet-pytorch/cutlass/examples/19_large_depthwise_conv2d_torch_extension')
 sys.path.append('/home/tlchen/RepLKNet-pytorch/cutlass/examples/19_large_depthwise_conv2d_torch_extension')
+sys.path.append('/work2/08090/tlc619/frontera/RepLKNet-pytorch/cutlass/examples/19_large_depthwise_conv2d_torch_extension')
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
