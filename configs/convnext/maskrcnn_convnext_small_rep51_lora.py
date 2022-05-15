@@ -6,6 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 
 
+
 _base_ = [
     '../_base_/models/voc.py',
     '../_base_/datasets/voc07.py',
@@ -17,6 +18,7 @@ model = dict(
         type='ConvNeXt_Rep',
         LoRA=True,
         in_chans=3,
+        width_factor=1.3,
         depths=[3, 3, 27, 3], 
         dims=[96, 192, 384, 768], 
         drop_path_rate=0.4,
