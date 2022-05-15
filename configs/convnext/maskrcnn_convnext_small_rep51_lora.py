@@ -26,7 +26,9 @@ model = dict(
         out_indices=[0, 1, 2, 3],
         kernel_size=[51,49,47,13,5]
     ),
-    neck=dict(in_channels=[96, 192, 384, 768]),
+    neck=dict(in_channels=[96, 192, 384, 768],
+        width_factor=1.3
+    ),
     roi_head=dict(
         bbox_head=[
             dict(

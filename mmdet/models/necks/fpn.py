@@ -76,9 +76,11 @@ class FPN(nn.Module):
                  conv_cfg=None,
                  norm_cfg=None,
                  act_cfg=None,
+                 width_factor=1,
                  upsample_cfg=dict(mode='nearest')):
         super(FPN, self).__init__()
         assert isinstance(in_channels, list)
+        in_channels = [int(x*width_factor) for x in in_channels]
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.num_ins = len(in_channels)
