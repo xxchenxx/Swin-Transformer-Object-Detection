@@ -21,7 +21,7 @@ model = dict(
     ),
     neck=dict(
         type='FPN',
-        in_channels=[128, 256, 512, 1024],
+        in_channels=[256, 512, 1024, 2048],
         out_channels=256,
         num_outs=5),
     rpn_head=dict(
@@ -39,7 +39,7 @@ model = dict(
             target_stds=[1.0, 1.0, 1.0, 1.0]),
         loss_cls=dict(
             type='CrossEntropyLoss', use_sigmoid=True, loss_weight=1.0),
-        loss_bbox=dict(type='SmoothL1Loss', beta=1.0 / 9.0, loss_weight=1.0)),
+        loss_bbox=dict(type='L1Loss', loss_weight=1.0)),
     roi_head=dict(
         type='StandardRoIHead',
         bbox_roi_extractor=dict(
@@ -52,7 +52,7 @@ model = dict(
             in_channels=256,
             fc_out_channels=1024,
             roi_feat_size=7,
-            num_classes=20,
+            num_classes=80,
             bbox_coder=dict(
                 type='DeltaXYWHBBoxCoder',
                 target_means=[0., 0., 0., 0.],
