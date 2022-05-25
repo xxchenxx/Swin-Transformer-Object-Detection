@@ -14,6 +14,7 @@ class StandardRoIHead(BaseRoIHead, BBoxTestMixin, MaskTestMixin):
         """Initialize assigner and sampler."""
         self.bbox_assigner = None
         self.bbox_sampler = None
+        print(self.train_cfg)
         if self.train_cfg:
             self.bbox_assigner = build_assigner(self.train_cfg.assigner)
             self.bbox_sampler = build_sampler(
