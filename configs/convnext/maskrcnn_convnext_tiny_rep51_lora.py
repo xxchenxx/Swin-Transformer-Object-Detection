@@ -8,7 +8,7 @@
 
 
 _base_ = [
-    '../_base_/models/voc.py',
+    '../_base_/models/voc_faster_rcnn.py',
     '../_base_/datasets/voc07.py',
     '../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py'
 ]
