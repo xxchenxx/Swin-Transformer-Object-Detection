@@ -1,0 +1,1 @@
+PORT=11040 nohup tools/dist_train.sh configs/convnext/faster_rcnn_convnext_tiny_rep51_lora.py 8 --cfg-options model.pretrained=/home/tlchen/Swin-Transformer-Object-Detection/SLaK_tiny/checkpoint-best-ema.pth > faster_rcnn_slak_51_tiny.out &
