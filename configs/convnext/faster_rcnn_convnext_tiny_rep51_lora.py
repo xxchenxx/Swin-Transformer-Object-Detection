@@ -24,7 +24,8 @@ model = dict(
         drop_path_rate=0.4,
         layer_scale_init_value=1.0,
         out_indices=[0, 1, 2, 3],
-        kernel_size=[51,49,47,13,5]
+        kernel_size=[51,49,47,13,5],
+        sparse=True,
     ),
     neck=dict(in_channels=[96, 192, 384, 768],
         width_factor=1.5

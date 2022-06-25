@@ -188,9 +188,10 @@ class ConvNeXt_Rep(nn.Module):
     def __init__(self, in_chans=3, num_classes=1000, 
                  depths=[3, 3, 9, 3], dims=[96, 192, 384, 768], drop_path_rate=0., 
                  layer_scale_init_value=1e-6, head_init_scale=1., kernel_size=[31, 29, 27, 13, 3], width_factor=1, LoRA=None
-                 ,out_indices=[0, 1, 2, 3]):
+                 ,out_indices=[0, 1, 2, 3], sparse=None):
         super().__init__()
         dims = [int(x*width_factor) for x in dims]
+        self.sparse = sparse
         self.kernel_size = kernel_size
         self.out_indices = out_indices
         self.downsample_layers = nn.ModuleList() # stem and 3 intermediate downsampling conv layers
@@ -257,10 +258,27 @@ class ConvNeXt_Rep(nn.Module):
             self.apply(_init_weights)
             logger = get_root_logger()
             load_checkpoint(self, pretrained, strict=False, logger=logger)
+
+            if self.sparse:
+                self.masks = {}
+                for name, weight in self.named_parameters():
+                    if len(weight.size()) == 2 or len(weight.size()) == 4:
+                        self.masks[name] = torch.zeros_like(weight, dtype=torch.float32, requires_grad=False).to('cuda')
+
+                for name, weight in self.named_parameters():
+                    if name in self.masks:
+                        self.masks[name][:] = (weight != 0.0).float().data.to('cuda')
+                        print(f"density of {name} is {(self.masks[name] != 0).sum().item() / weight.numel()}")
+
         elif pretrained is None:
             self.apply(_init_weights)
         else:
             raise TypeError('pretrained must be a str or None')
+
+    def apply_mask(self):
+        for name, weight in self.named_parameters():
+            if name in self.masks:
+                weight.data = weight.data * self.masks[name].to(weight.device)
 
     # def forward_features(self, x):
     #     for i in range(4):
@@ -268,6 +286,8 @@ class ConvNeXt_Rep(nn.Module):
     #        x = self.stages[i](x)
     #    return self.norm(x.mean([-2, -1])) # global average pooling, (N, C, H, W) -> (N, C)
     def forward_features(self, x):
+        if self.sparse:
+            self.apply_mask()
         outs = []
         for i in range(4):
             x = self.downsample_layers[i](x)
