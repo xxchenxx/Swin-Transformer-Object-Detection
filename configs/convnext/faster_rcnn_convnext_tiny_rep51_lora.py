@@ -18,7 +18,7 @@ model = dict(
         type='ConvNeXt_Rep',
         LoRA=True,
         in_chans=3,
-        width_factor=1.5,
+        width_factor=1.3,
         depths=[3, 3, 9, 3], 
         dims=[96, 192, 384, 768], 
         drop_path_rate=0.4,
@@ -28,7 +28,7 @@ model = dict(
         sparse=True,
     ),
     neck=dict(in_channels=[96, 192, 384, 768],
-        width_factor=1.5
+        width_factor=1.3
     )
 )
 
