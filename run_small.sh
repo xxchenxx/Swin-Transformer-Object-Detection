@@ -1,0 +1,1 @@
+nohup tools/dist_train.sh configs/convnext/cascade_mask_rcnn_slak_small_patch4_window7_mstrain_480-800_giou_4conv1f_adamw_3x_voc_in1k.py 8 --cfg-options model.pretrained=SLaK_small_checkpoint.pth > slak_small.out &
