@@ -23,6 +23,7 @@ model = dict(
         out_indices=[0, 1, 2, 3],
         LoRA=True,
         width_factor=1.3,
+        kernel_size=[51, 49, 47, 13, 5],
         sparse=True,
     ),
     neck=dict(in_channels=[124, 249, 499, 998]),
