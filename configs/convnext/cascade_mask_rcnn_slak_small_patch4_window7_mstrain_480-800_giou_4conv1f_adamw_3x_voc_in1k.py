@@ -14,6 +14,7 @@ _base_ = [
 
 model = dict(
     backbone=dict(
+        type='ConvNeXt_Rep',
         in_chans=3,
         depths=[3, 3, 27, 3], 
         dims=[96, 192, 384, 768], 
