@@ -128,7 +128,7 @@ train_pipeline = [
     dict(type='DefaultFormatBundle'),
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels', 'gt_masks']),
 ]
-data = dict(train=dict(pipeline=train_pipeline), samples_per_gpu=4, workers_per_gpu=2)
+data = dict(train=dict(pipeline=train_pipeline), samples_per_gpu=2, workers_per_gpu=4)
 
 optimizer = dict(constructor='LearningRateDecayOptimizerConstructor', _delete_=True, type='AdamW', 
                  lr=0.0002, betas=(0.9, 0.999), weight_decay=0.05,
